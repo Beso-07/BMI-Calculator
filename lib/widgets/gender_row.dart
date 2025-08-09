@@ -3,29 +3,32 @@ import 'package:flutter/material.dart';
 enum GenderType { MALE, FEMALE }
 
 class GenderRow extends StatefulWidget {
-  GenderRow({super.key});
+  final GenderType selectedGender;
+  final Function(GenderType) onGenderChanged;
+
+  const GenderRow({
+    super.key,
+    required this.selectedGender,
+    required this.onGenderChanged,
+  });
 
   @override
   State<GenderRow> createState() => _GenderRowState();
 }
 
 class _GenderRowState extends State<GenderRow> {
-  GenderType? selectedGender;
-
   void selectGender(GenderType gender) {
-    setState(() {
-      selectedGender = gender;
-    });
+    widget.onGenderChanged(gender);
   }
 
   Color changeBackgroundColor(GenderType gender) {
-    return selectedGender == gender
+    return widget.selectedGender == gender
         ? const Color(0xffffffff)
         : const Color(0xffF3A49F);
   }
 
   Color changeTextIconColor(GenderType gender) {
-    return selectedGender == gender
+    return widget.selectedGender == gender
         ? const Color(0xffEA5E60)
         : const Color(0xffFFEEE0);
   }

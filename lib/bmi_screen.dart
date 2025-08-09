@@ -1,10 +1,10 @@
-import 'package:firstapp/BMI-Calculator/widgets/gender_row.dart';
+import 'package:firstapp/widgets/gender_row.dart';
 import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color(0xffEA5E60);
 
 class BmiScreen extends StatefulWidget {
-  BmiScreen({super.key});
+  const BmiScreen({super.key});
 
   @override
   State<BmiScreen> createState() => _BmiScreenState();
@@ -15,9 +15,31 @@ class _BmiScreenState extends State<BmiScreen> {
   double weight = 110;
   double bmi = 0;
   IconData icon = Icons.arrow_right_alt;
+  GenderType selectedGender = GenderType.MALE;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: Text(
+          'BMI CLACULATOR',
+          style: TextStyle(fontSize: 26, color: Colors.white),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                height = 110;
+                weight = 110;
+                bmi = 0;
+                icon = Icons.arrow_right_alt;
+                selectedGender = GenderType.MALE;
+              });
+            },
+            icon: Icon(Icons.refresh, color: Colors.white, size: 30),
+          ),
+        ],
+      ),
       backgroundColor: kPrimaryColor,
       body: Container(
         width: double.infinity,
@@ -41,7 +63,14 @@ class _BmiScreenState extends State<BmiScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              GenderRow(),
+              GenderRow(
+                selectedGender: selectedGender,
+                onGenderChanged: (gender) {
+                  setState(() {
+                    selectedGender = gender;
+                  });
+                },
+              ),
               SizedBox(height: 30),
               Center(
                 child: Text(
@@ -114,7 +143,11 @@ class _BmiScreenState extends State<BmiScreen> {
                 children: [
                   Text(
                     '  Calculate BMI',
-                    style: TextStyle(fontSize: 30, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(width: 20),
                   Container(
@@ -130,7 +163,7 @@ class _BmiScreenState extends State<BmiScreen> {
                           icon = Icons.refresh;
                         });
                       },
-                      child: Icon(icon, color: kPrimaryColor, size: 35),
+                      child: Icon(icon, color: kPrimaryColor, size: 50),
                     ),
                   ),
                 ],
@@ -158,7 +191,7 @@ class _BmiScreenState extends State<BmiScreen> {
                     Text(
                       showResult(),
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
