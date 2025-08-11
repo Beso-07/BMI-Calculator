@@ -1,4 +1,6 @@
 import 'package:firstapp/widgets/gender_row.dart';
+import 'package:firstapp/widgets/show_result.dart';
+import 'package:firstapp/widgets/show_slider.dart';
 import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color(0xffEA5E60);
@@ -49,7 +51,7 @@ class _BmiScreenState extends State<BmiScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [kPrimaryColor, Colors.white],
-            stops: [0.6, 1.0],
+            stops: [0.65, 1.0],
           ),
         ),
         child: SingleChildScrollView(
@@ -79,30 +81,9 @@ class _BmiScreenState extends State<BmiScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Column(
-                children: [
-                  Text(
-                    '${height.toInt()} cm',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffF3A49F),
-                    ),
-                  ),
-                  Slider(
-                    activeColor: Colors.white,
-                    inactiveColor: Color(0xffF3A49F),
-                    min: 0,
-                    max: 220,
-                    divisions: 220,
-                    value: height,
-                    onChanged: (value) {
-                      setState(() {
-                        height = value;
-                      });
-                    },
-                  ),
-                ],
+              HeightSlider(
+                height: height,
+                onChanged: (value) => setState(() => height = value),
               ),
               SizedBox(height: 30),
               Center(
@@ -112,30 +93,9 @@ class _BmiScreenState extends State<BmiScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Column(
-                children: [
-                  Text(
-                    '${weight.toInt()} kg',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffF3A49F),
-                    ),
-                  ),
-                  Slider(
-                    activeColor: Colors.white,
-                    inactiveColor: Color(0xffF3A49F),
-                    min: 0,
-                    max: 220,
-                    divisions: 220,
-                    value: weight,
-                    onChanged: (value) {
-                      setState(() {
-                        weight = value;
-                      });
-                    },
-                  ),
-                ],
+              WeightSlider(
+                weight: weight,
+                onChanged: (value) => setState(() => weight = value),
               ),
               SizedBox(height: 50),
               Row(
@@ -169,36 +129,7 @@ class _BmiScreenState extends State<BmiScreen> {
                 ],
               ),
               SizedBox(height: 30),
-              if (bmi != 0) ...[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('  YOUR BMI: ', style: TextStyle(fontSize: 25)),
-                    Text(
-                      bmi.toStringAsFixed(1),
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      showResult(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                ),
-              ],
+              if (bmi != 0) ResultSection(bmi: bmi, resultText: showResult()),
             ],
           ),
         ),
