@@ -13,6 +13,3 @@ A simple and user-friendly Flutter app to calculate **Body Mass Index (BMI)** an
   - "You are obese. Be careful!"
 - Beautiful gradient background and clean UI design.
 
-## 🧮 How BMI is Calculated
-The app uses the formula:
-
